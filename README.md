@@ -3,14 +3,11 @@
 Description: Photo Editor Pro is a simple and creative photo editing website that allows users to apply filters, create photo collages, and learn more about the app through an About Us page. Built using HTML, CSS, and JavaScript, it runs directly in the browser — no downloads needed.
 
 Table of Contents: 
-[Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [Future Enhancements](#future-enhancements)
 - [Author](#author)
-- [License](#license)
 
 Features:
 - Home page (With animated text and eye catching images).
@@ -34,6 +31,12 @@ HTML5
 CSS3
 Javascript
 
+Future Ehancements:
+- Add downloadable edited images
+- Add drag-and-drop photo support
+- Make it mobile responsive
+- video editing and photoshop
+  
 Author:
 👩‍💻 Created by Nihita Prajapati  
 Student at Usha Mittal Institute of Technology  
