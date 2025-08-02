@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fdfdfd;
+      color: #333;
+    }
+    .menu-nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #000;
+  z-index: 999;
+}
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'segoe UI',sans-serif;
+}
+
+.menu-button {
+  background-color: #e4ecec;
+  color: rgb(38, 35, 35);
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(154, 160, 160, 0.3);
+  transition: background 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #edf7f9;
+}
+
+.menu-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 234, 255, 0.15);
+  padding: 10px 0;
+  display: none;
+  min-width: 180px;
+}
+
+.menu-dropdown li {
+  padding: 0;
+}
+
+.menu-dropdown li a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.menu-dropdown li a:hover {
+  background-color: #00eaff33;
+  color: #00eaff;
+}
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .about-content {
+      padding: 2rem 10%;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .team-section {
+      padding: 3rem 10%;
+      background: #f4f6fb;
+      text-align: center;
+    }
+
+    .team-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .team-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .team-member button {
+      background: #18181f;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .team-member button:hover {
+      background: #1f1f2b;
+    }
+
+    .member-photo {
+      display: none;
+      margin-top: 1rem;
+      width: 200px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    footer {
+      margin-top: 4rem;
+      background: #131317;
+      padding: 1rem;
+      text-align: center;
+      color: white;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="menu-nav">
+      <div class="logo">About us</div>
+  <button class="menu-button">Menu ▾</button>
+  <ul class="menu-dropdown">
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\web.html">Home</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\pageedit.html">Filters</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\Ripple.html">Collage</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\about.html">About Us</a></li>
+  </ul>
+  </nav> 
+  <script>
+  const menuBtn = document.querySelector(".menu-button");
+  const dropdown = document.querySelector(".menu-dropdown");
+
+  menuBtn.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Optional: Close when clicked outside
+  document.addEventListener("click", (e) => {
+    if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
+  <section class="about-content">
+    <p>
+      Welcome to our platform! We’re a group of passionate creators and developers working together to build something meaningful. 
+      Our mission is to make digital creativity more accessible, fun, and interactive for everyone.
+    </p>
+    <p>
+      Whether it’s a photo editing tool, animation platform, or custom web component – we’re always experimenting with new ideas 
+      to improve user experience and encourage innovation.
+    </p>
+  </section>
+
+  <section class="team-section">
+    <h2>Meet Our Team</h2>
+    <div class="team-list">
+      <div class="team-member">
+        <button onclick="togglePhoto('member1')">Carryminati</button>
+        <img id="member1" src="C:\Users\praja\Downloads\carry.webp" alt="Carryminati" class="member-photo" />
+      </div>
+
+      <div class="team-member">
+        <button onclick="togglePhoto('member2')">Mythpat</button>
+        <img id="member2" src="C:\Users\praja\Downloads\myth.webp" alt="mythpat" class="member-photo" />
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 PhotoEditor Pro. All rights reserved.
+  </footer>
+
+  <script>
+    function togglePhoto(id) {
+      const clickedImg = document.getElementById(id);
+      const allImgs = document.querySelectorAll('.member-photo');
+
+      allImgs.forEach(img => {
+        if (img.id !== id) img.style.display = 'none';
+      });
+
+      clickedImg.style.display = clickedImg.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>

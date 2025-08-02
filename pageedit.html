@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Photo Editor Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    .menu-nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #000;
+  z-index: 999;
+}
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'segoe UI',sans-serif;
+}
+
+.menu-button {
+  background-color: #e4ecec;
+  color: rgb(38, 35, 35);
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(154, 160, 160, 0.3);
+  transition: background 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #edf7f9;
+}
+
+.menu-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 234, 255, 0.15);
+  padding: 10px 0;
+  display: none;
+  min-width: 180px;
+}
+
+.menu-dropdown li {
+  padding: 0;
+}
+
+.menu-dropdown li a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.menu-dropdown li a:hover {
+  background-color: #00eaff33;
+  color: #00eaff;
+}
+
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .tool {
+      flex: 1 1 200px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .tool label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    canvas, #preview-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .controls button, .controls input[type="file"] {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      background: #111;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: #444;
+    }
+
+    footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111;
+  color: #fff;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
+}
+  </style>
+</head>
+<body>
+
+<div class="main-content">
+  <!-- Your main page content goes here -->
+</div>
+  <nav class="menu-nav">
+      <div class="logo">PhotoEditor Pro</div>
+  <button class="menu-button">Menu ▾</button>
+  <ul class="menu-dropdown">
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\web.html">Home</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\pageedit.html">Filters</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\Ripple.html">Collage</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\about.html">About Us</a></li>
+  </ul>
+  </nav>  
+  <main>
+    <section class="controls">
+      <label for="upload">Upload Image:</label>
+      <input type="file" id="upload" accept="image/*">
+      <button onclick="resetEdits()">Reset</button>
+      <button onclick="downloadImage()">Download</button>
+    </section>
+
+    <img id="preview-img" src="" alt="Preview" style="display:none;">
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <section class="tools">
+      <div class="tool">
+        <label>Brightness</label>
+        <input type="range" id="brightness" min="0" max="200" value="100">
+      </div>
+      <div class="tool">
+        <label>Contrast</label>
+        <input type="range" id="contrast" min="0" max="200" value="100">
+      </div>
+      <div class="tool">
+        <label>Saturation</label>
+        <input type="range" id="saturation" min="0" max="200" value="100">
+      </div>
+      <div class="tool">
+        <label>Grayscale</label>
+        <input type="range" id="grayscale" min="0" max="100" value="0">
+      </div>
+      <div class="tool">
+        <label>Blur</label>
+        <input type="range" id="blur" min="0" max="10" value="0">
+      </div>
+      <div class="tool">
+        <label>Hue Rotate</label>
+        <input type="range" id="hue" min="0" max="360" value="0">
+      </div>
+    </section>
+  </main>
+     <script>
+  const menuBtn = document.querySelector(".menu-button");
+  const dropdown = document.querySelector(".menu-dropdown");
+
+  menuBtn.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Optional: Close when clicked outside
+  document.addEventListener("click", (e) => {
+    if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
+  <script>
+    const upload = document.getElementById('upload');
+    const img = document.getElementById('preview-img');
+    const canvas = document.getElementById('canvas');
+
+    const filters = {
+      brightness: document.getElementById('brightness'),
+      contrast: document.getElementById('contrast'),
+      saturation: document.getElementById('saturation'),
+      grayscale: document.getElementById('grayscale'),
+      blur: document.getElementById('blur'),
+      hue: document.getElementById('hue')
+    };
+
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        img.src = reader.result;
+        img.style.display = 'block';
+        canvas.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    Object.values(filters).forEach(input => {
+      input.addEventListener('input', applyFilters);
+    });
+
+    function applyFilters() {
+      const style = `
+        brightness(${filters.brightness.value}%) 
+        contrast(${filters.contrast.value}%) 
+        saturate(${filters.saturation.value}%) 
+        grayscale(${filters.grayscale.value}%) 
+        blur(${filters.blur.value}px) 
+        hue-rotate(${filters.hue.value}deg)`;
+      img.style.filter = style;
+    }
+
+    function resetEdits() {
+      Object.values(filters).forEach(input => input.value = input.defaultValue);
+      img.style.filter = 'none';
+    }
+
+    function downloadImage() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.filter = img.style.filter;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const link = document.createElement('a');
+      link.download = 'edited-image.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+  </script>
+  <footer>
+    &copy; 2025 PhotoEditor Pro. All rights reserved.
+  </footer>
+</body>
+</html>

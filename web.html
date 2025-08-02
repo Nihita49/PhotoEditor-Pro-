@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoEditor Pro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }body {
+  background: #fff;
+  color: #333;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ripple background */
+.ripple-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 192, 255, 0.2);
+  animation: rippleWave 8s infinite;
+}
+
+.ripple:nth-child(1) {
+  width: 400px;
+  height: 400px;
+  top: 10%;
+  left: 20%;
+}
+
+.ripple:nth-child(2) {
+  width: 300px;
+  height: 300px;
+  top: 40%;
+  left: 60%;
+}
+
+.ripple:nth-child(3) {
+  width: 500px;
+  height: 500px;
+  top: 70%;
+  left: 30%;
+}
+
+@keyframes rippleWave {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+.menu-nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #000;
+  z-index: 999;
+}
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'segoe UI',sans-serif;
+}
+
+.menu-button {
+  background-color: #e4ecec;
+  color: rgb(38, 35, 35);
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(154, 160, 160, 0.3);
+  transition: background 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #edf7f9;
+}
+
+.menu-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 234, 255, 0.15);
+  padding: 10px 0;
+  display: none;
+  min-width: 180px;
+}
+
+.menu-dropdown li {
+  padding: 0;
+}
+
+.menu-dropdown li a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.menu-dropdown li a:hover {
+  background-color: #00eaff33;
+  color: #00eaff;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: transparent;
+  color: #0072ff;
+  animation: fadeIn 1s ease-in-out;
+  z-index: 1;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  animation: slideIn 1.5s ease-out;
+}
+
+.gallery {
+  padding: 2rem 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-track {
+  display: flex;
+  width: calc(400px * 10);
+  animation: scrollGallery 30s linear infinite;
+  gap: 1rem;
+}
+
+.gallery img {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes scrollGallery {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.premium-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #1c1c1e, #2a2a2d);
+  clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 90%);
+  color: #fff;
+  gap: 40px;
+  animation: fadeSlideIn 1s ease-in forwards;
+  opacity: 0;
+  margin-top: 50px;
+}
+
+.premium-image img {
+  width: 350px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.premium-content h2 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+  color: #ffb700;
+}
+
+.premium-content p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.premium-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.premium-content ul li {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 24px;
+  color: #eee;
+}
+
+.premium-content ul li::before {
+  content: "✔";
+  color: #00d084;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Animation */
+@keyframes fadeSlideIn {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+
+}
+/* Floating animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+  @keyframes tearEffect {
+    0% {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    40% {
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 0 60%);
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translateY(-100%);
+    }
+  }
+ 
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111;
+  color: #fff;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+  </style>
+</head>
+<body>  
+  <div class="ripple-background">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>  
+    <nav class="menu-nav">
+      <div class="logo">PhotoEditor Pro</div>
+  <button class="menu-button">Menu ▾</button>
+  <ul class="menu-dropdown">
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\web.html" >Home</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\pageedit.html" onclick="openPageWithTear('pageedit.html')">Filters</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\Ripple.html" onclick="openPageWithTear('Ripple.html')">Collage</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\about.html" >About Us</a></li>
+  </ul>
+  </nav> 
+  <section class="hero">
+    <h1>Create, Edit, Inspire</h1>
+    <p>Unleash your creativity with stunning filters and fun collages.</p>
+  </section>  <section class="gallery">
+    <div class="gallery-track">
+      <img src="C:\Users\praja\Downloads\ilyuza-mingazova-zMIka4PsDKk-unsplash.jpg" alt="Nature">
+      <img src="C:\Users\praja\Downloads\riccardo-mion-FzE-5pNHBRs-unsplash.jpg" alt="Portrait">
+      <img src="C:\Users\praja\Downloads\jakob-owens-fB_kHwH6Sf0-unsplash.jpg" alt="Technology">
+      <img src="C:\Users\praja\Downloads\elena-mozhvilo-girJ8wuVrCA-unsplash.jpg" alt="Art">
+      <img src="C:\Users\praja\Downloads\theregisti-VZw6PE-5gM4-unsplash.jpg" alt="Editing">
+      <img src="C:\Users\praja\Downloads\kit-formerly-convertkit-OOtFjQBuzwY-unsplash.jpg" alt="Design">
+      <img src="C:\Users\praja\Downloads\alice-dietrich-FwF_fKj5tBo-unsplash.jpg" alt="Creative">
+      <img src="C:\Users\praja\Downloads\angelina-O5336jYvxCQ-unsplash.jpg" alt="filters">
+      <img src="C:\Users\praja\Downloads\paul-pastourmatzis-wNGdv5gxTPo-unsplash.jpg" alt="Camera">
+    </div>
+  </section> 
+  <script>
+  const menuBtn = document.querySelector(".menu-button");
+  const dropdown = document.querySelector(".menu-dropdown");
+
+  menuBtn.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Optional: Close when clicked outside
+  document.addEventListener("click", (e) => {
+    if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
+<section class="premium-container">
+  <div class="premium-image">
+    <img src="C:\Users\praja\Downloads\jonathan-borba-gQ-bGm8TapQ-unsplash.jpg" alt="Premium Illustration">
+  </div>
+  <div class="premium-content">
+    <h2>Go Premium</h2>
+    <p>Unlock exclusive features and make your photo editing experience powerful and fun.</p>
+    <ul>
+      <li>🌈 Exclusive Filters & Effects</li>
+      <li>🎨 Advanced Collage Templates</li>
+      <li>🚫 Ad-free Experience</li>
+      <li>📸 HD Export</li>
+    </ul>
+  </div>
+</section>
+<script>
+  function startTear(e, url) {
+    e.preventDefault();
+    const tear = document.getElementById('tearEffect');
+    if (tear) {
+      tear.classList.remove("hidden");
+      tear.classList.add('animate');
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000); // match your CSS animation time
+    } else {
+      window.location.href = url;
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const tear = document.getElementById("tearEffect");
+    if (tear) {
+      tear.classList.add("animate");
+    }
+  });
+</script>
+<footer>
+    &copy; 2025 PhotoEditor Pro. All rights reserved.
+  </footer>
+</body>
+</html>

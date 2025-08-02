@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collage Maker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+.menu-nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #000;
+  z-index: 999;
+}
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'segoe UI',sans-serif;
+}
+
+.menu-button {
+  background-color: #e4ecec;
+  color: rgb(38, 35, 35);
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(154, 160, 160, 0.3);
+  transition: background 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #edf7f9;
+}
+
+.menu-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 234, 255, 0.15);
+  padding: 10px 0;
+  display: none;
+  min-width: 180px;
+}
+
+.menu-dropdown li {
+  padding: 0;
+}
+
+.menu-dropdown li a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.menu-dropdown li a:hover {
+  background-color: #00eaff33;
+  color: #00eaff;
+}
+
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.instruction {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+select, input[type="file"], button {
+  padding: 10px;
+  margin: 10px 5px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #111;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #444;
+}
+
+.collage-frame {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.frame1 {
+  grid-template-columns: 2fr 1fr;
+}
+
+.frame1 img:first-child {
+  grid-row: span 2;
+}
+
+.frame2 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.frame3 {
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 2fr 1fr;
+}
+
+.collage-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.ripple {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: rippleEffect 1.2s ease-out forwards;
+      filter: blur(4px);
+    }
+
+    @keyframes rippleEffect {
+      0% {
+        transform: scale(0.3);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111;
+  color: #fff;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+  </style>
+</head>
+<body>
+  <nav class="menu-nav">
+      <div class="logo">PhotoEditor Pro</div>
+  <button class="menu-button">Menu ▾</button>
+  <ul class="menu-dropdown">
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\web.html">Home</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\pageedit.html">Filters</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\Ripple.html">Collage</a></li>
+    <li><a href="C:\Users\praja\OneDrive\ドキュメント\hackathon\about.html">About Us</a></li>
+  </ul>
+  </nav>  
+   <main>
+    <p class="instruction">Upload 3 images and choose your favorite collage frame to create a stunning collage!</p><input type="file" id="img1" accept="image/*">
+<input type="file" id="img2" accept="image/*">
+<input type="file" id="img3" accept="image/*">
+
+<label for="layoutSelect">Choose Frame:</label>
+<select id="layoutSelect">
+  <option value="frame1">2 Big + 1 Small</option>
+  <option value="frame2">3 in Row</option>
+  <option value="frame3">Mixed Height</option>
+</select>
+
+<button onclick="generateCollage()">Create Collage</button>
+<button onclick="downloadCollage()">Download</button>
+
+<div id="collage" class="collage-frame"></div>
+
+  </main>  
+    <script>
+    function generateCollage() {
+      const img1 = document.getElementById('img1').files[0];
+      const img2 = document.getElementById('img2').files[0];
+      const img3 = document.getElementById('img3').files[0];
+      const layout = document.getElementById('layoutSelect').value;
+
+      if (!img1 || !img2 || !img3) {
+        alert("Please upload all three images.");
+        return;
+      }
+
+      const collage = document.getElementById('collage');
+      collage.innerHTML = '';
+      collage.className = `collage-frame ${layout}`;
+
+      [img1, img2, img3].forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const image = document.createElement('img');
+          image.src = e.target.result;
+          collage.appendChild(image);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function downloadCollage() {
+      html2canvas(document.getElementById('collage')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'collage.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>  
+  <script>
+  const menuBtn = document.querySelector(".menu-button");
+  const dropdown = document.querySelector(".menu-dropdown");
+
+  menuBtn.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Optional: Close when clicked outside
+  document.addEventListener("click", (e) => {
+    if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+  let isDragging = false;
+
+  document.addEventListener("mousedown", () => {
+    isDragging = true;
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    const ripple = document.createElement("div");
+    ripple.classList.add("ripple");
+
+    const size = 60 + Math.random() * 40;
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - size / 2}px`;
+    ripple.style.top = `${e.clientY - size / 2}px`;
+    ripple.style.background = getRandomColor();
+
+    document.body.appendChild(ripple);
+
+    ripple.addEventListener("animationend", () => ripple.remove());
+  });
+
+  function getRandomColor() {
+    const colors = [
+      "rgba(0, 255, 255, 0.3)",
+      "rgba(255, 0, 255, 0.3)",
+      "rgba(0, 150, 255, 0.3)",
+      "rgba(255, 255, 0, 0.3)",
+      "rgba(255, 105, 180, 0.3)",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+</script>
+
+<footer>
+    &copy; 2025 PhotoEditor Pro. All rights reserved.
+  </footer>
+</body>
+</html>
